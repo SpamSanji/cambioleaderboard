@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<title>Game Night Leaderboard</title>
+<style>
+:root{--bg:#0b1020;--panel:#131b2e;--panel2:#1a2540;--text:#f4f7ff;--muted:#9eacc8;--line:#2a3652;--accent:#8b7cff;--accent2:#5eead4;--gold:#ffd166;--danger:#fb7185}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#20224a 0,#0b1020 42%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:1050px;margin:auto;padding:22px 15px 50px}.hero{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:8px 0 22px}.eyebrow{color:var(--accent2);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.hero h1{font-size:clamp(28px,6vw,42px);line-height:1.08;margin:7px 0}.hero p{color:var(--muted);margin:8px 0 0}.mark{font-size:40px;background:#222744;border:1px solid #3a416b;border-radius:18px;padding:12px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab,button{border:0;border-radius:12px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer;transition:.15s}.tab{background:#172139;color:var(--muted);border:1px solid var(--line)}.tab.active{background:var(--accent);color:white;border-color:transparent}.primary{background:var(--accent);color:white}.secondary{background:#25314d;color:var(--text);border:1px solid #3a496b}.teal{background:var(--accent2);color:#082521}.danger{background:#3b1f32;color:#ffc3ce;border:1px solid #743448}.small{padding:8px 10px;font-size:13px}.grid{display:grid;grid-template-columns:1fr 1.35fr;gap:15px}.panel{background:linear-gradient(145deg,rgba(23,32,54,.97),rgba(16,24,42,.97));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 12px 35px #0002}.panel h2{font-size:19px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 15px}.fieldrow{display:flex;gap:8px}.fieldrow input{min-width:0;flex:1}input{background:#0c1426;border:1px solid #34415f;border-radius:12px;padding:12px;color:var(--text);font:inherit;width:100%;outline:none}input:focus{border-color:var(--accent)}.playerlist{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.player-chip{display:flex;align-items:center;gap:8px;background:#202b46;border:1px solid #354361;padding:7px 9px 7px 12px;border-radius:999px;font-size:14px}.remove{background:transparent;color:#b6c0d6;padding:0 2px;font-size:18px;line-height:1}.empty{color:var(--muted);font-size:14px;padding:12px 0}.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:15px 0}.stat{background:#0c1426;border:1px solid var(--line);border-radius:14px;padding:12px}.stat strong{font-size:24px;display:block}.stat span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:440px}th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:11px 8px;border-bottom:1px solid var(--line)}td{padding:13px 8px;border-bottom:1px solid #26314a;font-size:14px}tbody tr:last-child td{border-bottom:0}.rank{color:var(--muted);font-weight:800;width:34px}.namecell{font-weight:750}.points{font-weight:850;color:var(--accent2)}.gold{color:var(--gold)}.modebar{display:flex;gap:8px;margin:15px 0}.modebar button{flex:1}.bubblegrid{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}.bubble{background:#202b46;color:var(--text);border:1px solid #3b4a6a;border-radius:999px;padding:12px 15px;min-height:46px}.bubble.selected{background:var(--accent);border-color:#b3aaff;color:white;box-shadow:0 0 0 3px #8b7cff25}.bubble .num{display:inline-grid;place-items:center;background:#ffffff25;border-radius:50%;width:22px;height:22px;margin-right:6px;font-size:12px}.stepnote{color:var(--muted);font-size:13px;line-height:1.5}.orderlist{display:grid;gap:7px;margin:12px 0}.orderitem{display:flex;align-items:center;gap:10px;background:#0c1426;border:1px solid var(--line);padding:10px 12px;border-radius:12px}.orderbadge{background:#283452;border-radius:9px;padding:5px 8px;font-weight:850;color:var(--gold)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.hidden{display:none!important}.notice{background:#102d31;border:1px solid #245458;color:#b7fff5;border-radius:12px;padding:11px 13px;font-size:13px;margin:12px 0}.warning{background:#362b17;border-color:#6a5429;color:#ffe3a2}.footer{color:var(--muted);font-size:12px;text-align:center;margin-top:18px;line-height:1.6}.roundhead{display:flex;justify-content:space-between;gap:10px;align-items:start}.pill{font-size:12px;color:#c7c0ff;background:#2b2751;border-radius:999px;padding:6px 9px;white-space:nowrap}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.hero{align-items:flex-start}.mark{font-size:30px;padding:9px}.panel{padding:15px}.stat strong{font-size:21px}.wrap{padding:16px 12px 35px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div><div class="eyebrow">Your game • Your rankings</div><h1>Game Night<br>Leaderboard</h1><p>Rank each round. Track wins and points fairly.</p></div>
+    <div class="mark">🏆</div>
+  </header>
+  <div class="tabs">
+    <button class="tab active" data-tab="boards">🏆 Leaderboards</button>
+    <button class="tab" data-tab="round">＋ Enter a round</button>
+    <button class="tab" data-tab="history">📜 Round history</button>
+  </div>
+
+  <section id="boards">
+    <div class="grid">
+      <div class="panel">
+        <h2>👥 Players</h2><p class="sub">Add everyone who might play. Players can sit out a round without losing points or position.</p>
+        <form id="addForm" class="fieldrow"><input id="playerName" maxlength="30" placeholder="Enter player name" autocomplete="off" required><button class="primary" type="submit">Add</button></form>
+        <div id="playerList" class="playerlist"></div>
+        <div class="notice">💾 Your results save in this browser on this device. Use Export backup to keep a copy.</div>
+        <div class="actions"><button id="exportBtn" class="secondary small">Export backup</button><button id="importBtn" class="secondary small">Import backup</button><input id="importFile" type="file" accept="application/json,.json" class="hidden"></div>
+        <p class="stepnote">Removing a player removes them from the active player list, but past round records remain in history. Export a backup before major changes.</p>
+      </div>
+      <div class="panel">
+        <div class="roundhead"><div><h2>📊 Overall standings</h2><p class="sub">Two different ways to rank your players.</p></div><span id="roundCount" class="pill">0 rounds</span></div>
+        <div class="statrow">
+          <div class="stat"><strong id="totalPlayers">0</strong><span>Players</span></div>
+          <div class="stat"><strong id="totalRounds">0</strong><span>Rounds played</span></div>
+          <div class="stat"><strong id="totalPoints">0</strong><span>Points awarded</span></div>
+        </div>
+        <div class="modebar"><button class="primary" id="winsMode">Wins & win %</button><button class="secondary" id="pointsMode">Total points</button></div>
+        <div id="leaderboard" class="tablewrap"></div>
+        <p id="boardExplanation" class="stepnote">Win % = rounds won ÷ rounds played × 100. A player who sits out is not counted as having played.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="round" class="hidden">
+    <div class="panel">
+      <h2>🎮 Enter round results</h2><p class="sub">Tap players in finishing order: 1st, then 2nd, then 3rd, and so on. You can finish with any number of players.</p>
+      <div class="notice warning">Only selected players count in this round. Anyone not selected gets no win, no loss, and no points added.</div>
+      <label for="roundLabel" class="stepnote">Optional round name / game number</label>
+      <input id="roundLabel" maxlength="60" placeholder="e.g. Round 4 — Friday night" style="margin:6px 0 8px">
+      <div class="roundhead"><div><h2 style="font-size:16px;margin-top:10px">Tap finishing order</h2><p id="selectionCount" class="sub">0 players selected</p></div><button id="undoBtn" class="secondary small">Undo last</button></div>
+      <div id="bubbles" class="bubblegrid"></div>
+      <div id="orderPreview" class="orderlist"></div>
+      <div id="roundMessage" class="stepnote"></div>
+      <div class="actions"><button id="confirmRound" class="teal">✓ Confirm round</button><button id="clearRound" class="secondary">Clear selection</button></div>
+    </div>
+  </section>
+
+  <section id="history" class="hidden">
+    <div class="panel"><div class="roundhead"><div><h2>📜 Round history</h2><p class="sub">Review saved rounds and their points.</p></div><button id="clearHistory" class="danger small">Clear all results</button></div><div id="historyList"></div></div>
+  </section>
+  <div class="footer">Game Night Leaderboard • Free, single-device edition<br>Tip: use Export backup regularly. Browser data may be lost if you clear browser storage.</div>
+</div>
+<script>
+const STORE_KEY='game-night-leaderboard-v1';
+let state={players:[],rounds:[]};
+let selected=[];
+let boardMode='wins';
+const $=id=>document.getElementById(id);
+function load(){try{const x=JSON.parse(localStorage.getItem(STORE_KEY));if(x&&Array.isArray(x.players)&&Array.isArray(x.rounds))state=x;}catch(e){}}
+function save(){localStorage.setItem(STORE_KEY,JSON.stringify(state));renderAll();}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function switchTab(name){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));['boards','round','history'].forEach(id=>$(id).classList.toggle('hidden',id!==name));if(name==='round')renderBubbles();if(name==='history')renderHistory();}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+$('addForm').addEventListener('submit',e=>{e.preventDefault();const name=$('playerName').value.trim();if(!name)return;if(state.players.some(p=>p.name.toLowerCase()===name.toLowerCase())){alert('That player name already exists.');return;}state.players.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),name});$('playerName').value='';save();});
+function removePlayer(id){const p=state.players.find(x=>x.id===id);if(!p)return;if(!confirm(`Remove ${p.name} from the active player list? Their previous rounds stay in history.`))return;state.players=state.players.filter(x=>x.id!==id);selected=selected.filter(x=>x!==id);save();}
+function stats(){const m=new Map();state.players.forEach(p=>m.set(p.id,{...p,wins:0,played:0,points:0}));state.rounds.forEach(r=>r.order.forEach((id,i)=>{if(!m.has(id)){const oldName=r.names?.[id]||'Former player';m.set(id,{id,name:oldName,wins:0,played:0,points:0,former:true});}const s=m.get(id);s.played++;if(i===0)s.wins++;s.points+=r.points[i]||0;}));return [...m.values()];}
+function renderPlayers(){const el=$('playerList');if(!state.players.length){el.innerHTML='<div class="empty">No players yet. Add your first name above.</div>';return;}el.innerHTML=state.players.map(p=>`<span class="player-chip">${esc(p.name)} <button class="remove" title="Remove ${esc(p.name)}" aria-label="Remove ${esc(p.name)}" data-remove="${p.id}">×</button></span>`).join('');el.querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>removePlayer(b.dataset.remove)));}
+function renderBoard(){const all=stats();const playedRounds=state.rounds.length;const points=all.reduce((s,p)=>s+p.points,0);$('totalPlayers').textContent=state.players.length;$('totalRounds').textContent=playedRounds;$('totalPoints').textContent=points;$('roundCount').textContent=`${playedRounds} round${playedRounds===1?'':'s'}`;$('winsMode').className=boardMode==='wins'?'primary':'secondary';$('pointsMode').className=boardMode==='points'?'primary':'secondary';
+all.sort((a,b)=>boardMode==='wins'?(b.wins-a.wins||(b.played?b.wins/b.played:0)-(a.played?a.wins/a.played:0)||b.points-a.points||a.name.localeCompare(b.name)):(b.points-a.points||b.wins-a.wins||a.name.localeCompare(b.name)));
+$('boardExplanation').textContent=boardMode==='wins'?'Win % = rounds won ÷ rounds played × 100. Players who sit out are not counted as having played.':'Points per round: 1st gets N−1, 2nd gets N−2, and last gets 0. N is the number of players in that round.';
+if(!all.length){$('leaderboard').innerHTML='<div class="empty">Add players to start your leaderboard.</div>';return;}
+$('leaderboard').innerHTML=`<table><thead><tr><th>#</th><th>Player</th>${boardMode==='wins'?'<th>Wins</th><th>Win %</th><th>Played</th>':'<th>Total points</th><th>Wins</th><th>Played</th>'}</tr></thead><tbody>${all.map((p,i)=>`<tr><td class="rank">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</td><td class="namecell">${esc(p.name)}${p.former?' <span style="color:var(--muted);font-size:11px">(removed)</span>':''}</td>${boardMode==='wins'?`<td>${p.wins}</td><td>${p.played?Math.round(p.wins/p.played*1000)/10:0}%</td><td>${p.played}</td>`:`<td class="points">${p.points}</td><td>${p.wins}</td><td>${p.played}</td>`}</tr>`).join('')}</tbody></table>`;}
+function renderBubbles(){const el=$('bubbles');if(!state.players.length){el.innerHTML='<div class="empty">Add players in the Leaderboards tab first.</div>';return;}el.innerHTML=state.players.map(p=>{const n=selected.indexOf(p.id);return `<button class="bubble ${n>=0?'selected':''}" data-player="${p.id}">${n>=0?`<span class="num">${n+1}</span>`:''}${esc(p.name)}</button>`}).join('');el.querySelectorAll('[data-player]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.player;const i=selected.indexOf(id);if(i>=0)selected.splice(i,1);else selected.push(id);renderBubbles();renderOrder();}));renderOrder();}
+function renderOrder(){ $('selectionCount').textContent=`${selected.length} player${selected.length===1?'':'s'} selected`; $('orderPreview').innerHTML=selected.map((id,i)=>{const p=state.players.find(x=>x.id===id);return `<div class="orderitem"><span class="orderbadge">${i+1}${i===0?'st':i===1?'nd':i===2?'rd':'th'}</span><span>${esc(p?.name||'Unknown')}</span><span style="margin-left:auto;color:var(--accent2);font-weight:800">${selected.length-1-i} pts</span></div>`}).join('');$('roundMessage').textContent=selected.length?`This round has ${selected.length} player${selected.length===1?'':'s'}. ${selected[0]?(state.players.find(p=>p.id===selected[0])?.name||'First player')+' is currently in 1st place.':''} Confirm when the order is correct.`:'Select at least one player. The first selected player is 1st place.';$('confirmRound').disabled=selected.length===0;$('confirmRound').style.opacity=selected.length===0?'.5':'1';}
+$('undoBtn').addEventListener('click',()=>{selected.pop();renderBubbles();});$('clearRound').addEventListener('click',()=>{selected=[];renderBubbles();$('roundLabel').value='';});
+$('confirmRound').addEventListener('click',()=>{if(!selected.length){alert('Select at least one player first.');return;}const n=selected.length;const names={};state.players.forEach(p=>names[p.id]=p.name);const points=selected.map((id,i)=>n-1-i);state.rounds.push({id:Date.now(),label:$('roundLabel').value.trim()||`Round ${state.rounds.length+1}`,date:new Date().toISOString(),order:[...selected],points,names});selected=[];$('roundLabel').value='';save();switchTab('boards');alert('Round saved! Leaderboards updated.');});
+$('winsMode').addEventListener('click',()=>{boardMode='wins';renderBoard();});$('pointsMode').addEventListener('click',()=>{boardMode='points';renderBoard();});
+function renderHistory(){const el=$('historyList');if(!state.rounds.length){el.innerHTML='<div class="empty">No rounds confirmed yet.</div>';return;}el.innerHTML=[...state.rounds].reverse().map((r,rev)=>{const actual=state.rounds.length-rev;return `<div class="panel" style="padding:14px;margin:10px 0;background:#0e1729"><div class="roundhead"><div><strong>${esc(r.label||`Round ${actual}`)}</strong><div class="stepnote">${new Date(r.date).toLocaleString()}</div></div><span class="pill">${r.order.length} players</span></div><div class="orderlist">${r.order.map((id,i)=>`<div class="orderitem"><span class="orderbadge">${i+1}</span><span>${esc(r.names?.[id]||state.players.find(p=>p.id===id)?.name||'Former player')}</span><span style="margin-left:auto;color:var(--accent2);font-weight:800">+${r.points[i]||0} pts</span></div>`).join('')}</div><button class="danger small" data-delete-round="${r.id}">Delete this round</button></div>`}).join('');el.querySelectorAll('[data-delete-round]').forEach(b=>b.addEventListener('click',()=>{if(confirm('Delete this round? Wins and points from it will be recalculated.')){state.rounds=state.rounds.filter(r=>String(r.id)!==b.dataset.deleteRound);save();}}));}
+$('clearHistory').addEventListener('click',()=>{if(!state.rounds.length){alert('There are no results to clear.');return;}if(confirm('Delete ALL round results? This will reset wins and points but keep player names. Export a backup first if needed.')){state.rounds=[];save();}});
+function renderAll(){renderPlayers();renderBoard();renderBubbles();renderHistory();}
+$('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='game-leaderboard-backup.json';a.click();URL.revokeObjectURL(a.href);});
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data.players)||!Array.isArray(data.rounds))throw new Error();if(confirm('Import this backup and replace the current players and rounds?')){state=data;selected=[];save();alert('Backup imported.');}}catch(err){alert('That file does not look like a valid leaderboard backup.');}e.target.value='';});
+load();renderAll();
+</script>
+</body>
+</html>
